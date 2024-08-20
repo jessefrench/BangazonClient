@@ -1,12 +1,3 @@
----
-name: Standard issue template
-about: Standard issue ticket structure for NSS workflow.
-title: ''
-labels: ''
-assignees: ''
-
----
-
 <!--- Provide a general summary of the issue in the Title above -->
 <!--- DELETE ALL COMMENTS BEFORE CREATING ISSUE -->
 
