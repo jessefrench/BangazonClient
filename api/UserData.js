@@ -1,37 +1,59 @@
 import { clientCredentials } from '../utils/client';
 
-const getSingleUser = (userId) => new Promise((resolve, reject) => {
-  fetch(`${clientCredentials.databaseURL}/user/${userId}`, {
+const getUserDetails = (uid) => new Promise((resolve, reject) => {
+  fetch(`${clientCredentials.databaseURL}/users/details/${uid}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      Accept: 'application/json',
     },
   })
-    .then((resp) => resolve(resp.json()))
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then((data) => resolve(data))
     .catch(reject);
 });
 
-const updateRegisteredUser = (formData) => new Promise((resolve, reject) => {
-  fetch(`${clientCredentials.databaseURL}/user/${formData.id}`, {
+const switchUserToSeller = (uid) => new Promise((resolve, reject) => {
+  fetch(`${clientCredentials.databaseURL}/users/sell/${uid}`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
-      Accept: 'application/json',
     },
-    body: JSON.stringify(formData),
   })
-    .then((resp) => {
-      if (resp.status === 204) {
-        resolve({});
-      } else {
-        reject(resp.json());
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
       }
+      return response.json();
     })
+    .then((data) => resolve(data))
+    .catch(reject);
+});
+
+const updateUser = (id, payload) => new Promise((resolve, reject) => {
+  fetch(`${clientCredentials.databaseURL}/users/${id}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then((data) => resolve(data))
     .catch(reject);
 });
 
 export {
-  getSingleUser,
-  updateRegisteredUser,
+  getUserDetails,
+  switchUserToSeller,
+  updateUser,
 };

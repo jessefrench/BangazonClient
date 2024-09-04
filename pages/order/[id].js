@@ -1,31 +1,33 @@
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
-import { getProductsByOrder } from '../../api/OrderData';
-import ProductCard from '../../components/ProductCard';
+import CartProductCard from '../../components/cards/CartProductCard';
+import { getOrderProducts } from '../../api/orderData';
 
 export default function ViewOrder() {
-  const [order, setOrder] = useState([]);
+  const [orderDetails, setOrderDetails] = useState({});
+  const [orderId, setOrderId] = useState(null);
   const router = useRouter();
-  const { id } = router.query;
 
   useEffect(() => {
-    if (id) {
-      getProductsByOrder(id).then((data) => {
-        setOrder(data);
-      });
+    if (router.query.id) {
+      setOrderId(router.query.id);
+      getOrderProducts(router.query.id).then(setOrderDetails);
     }
-  }, [id]);
+  }, [router.query.id]);
+
+  const handleUpdate = () => {
+    getOrderProducts(orderId).then(setOrderDetails);
+  };
 
   return (
-    <Container>
-      <Row>
-        {order.map((product) => (
-          <Col key={product.id} xs={12} sm={6} md={4} lg={3} className="mb-4">
-            <ProductCard product={product} />
-          </Col>
-        ))}
-      </Row>
-    </Container>
+    <>
+      <div className="text-center my-4">
+        <div className="d-flex flex-wrap">
+          {orderDetails.products?.map((product) => (
+            <CartProductCard key={product.id} product={product} orderId={orderId} onUpdate={handleUpdate} />
+          ))}
+        </div>
+      </div>
+    </>
   );
 }

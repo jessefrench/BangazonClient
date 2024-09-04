@@ -8,102 +8,90 @@ const getAllProducts = () => new Promise((resolve, reject) => {
       Accept: 'application/json',
     },
   })
-    .then((resp) => resolve(resp.json()))
+    .then((response) => {
+      if (!response.ok) {
+        reject(new Error('Network response was not ok'));
+      } else {
+        resolve(response.json());
+      }
+    })
+    .then((data) => resolve(Object.values(data)))
     .catch(reject);
 });
 
-const getSingleProduct = (productId) => new Promise((resolve, reject) => {
-  fetch(`${clientCredentials.databaseURL}/products/${productId}`, {
+const getSingleProduct = (id) => new Promise((resolve, reject) => {
+  fetch(`${clientCredentials.databaseURL}/products/${id}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      Accept: 'application/json',
     },
   })
-    .then((resp) => resolve(resp.json()))
+    .then((response) => response.json())
+    .then((data) => resolve(data))
     .catch(reject);
 });
 
-const getProductsBySellerId = (sellerId) => new Promise((resolve, reject) => {
-  fetch(`${clientCredentials.databaseURL}/products/seller/${sellerId}`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-    },
-  })
-    .then((resp) => resolve(resp.json()))
-    .catch(reject);
-});
-
-const getProductsByCategory = (categoryId) => new Promise((resolve, reject) => {
-  fetch(`${clientCredentials.databaseURL}/products/category/${categoryId}`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-    },
-  })
-    .then((resp) => resolve(resp.json()))
-    .catch(reject);
-});
-
-const createProduct = (formData) => new Promise((resolve, reject) => {
+const createProduct = (payload) => new Promise((resolve, reject) => {
   fetch(`${clientCredentials.databaseURL}/products`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Accept: 'application/json',
     },
-    body: JSON.stringify(formData),
+    body: JSON.stringify(payload),
   })
-    .then((resp) => resolve(resp.json()))
+    .then((response) => response.json())
+    .then((data) => resolve(data))
     .catch(reject);
 });
 
-const updateProduct = (formData) => new Promise((resolve, reject) => {
-  fetch(`${clientCredentials.databaseURL}/products/${formData.productId}`, {
-    method: 'PATCH',
+const updateProduct = (payload) => new Promise((resolve, reject) => {
+  fetch(`${clientCredentials.databaseURL}/products/${payload.id}`, {
+    method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
-      Accept: 'application/json',
     },
-    body: JSON.stringify(formData),
+    body: JSON.stringify(payload),
   })
-    .then((resp) => {
-      if (resp.status === 204) {
-        resolve({});
-      } else {
-        reject(resp.json());
+    .then((response) => response.json())
+    .then(resolve)
+    .catch(reject);
+});
+
+const getProductOrdersById = (id) => new Promise((resolve, reject) => {
+  fetch(`${clientCredentials.databaseURL}/products/${id}/orders`)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
       }
+      return response.json();
     })
+    .then((data) => resolve(data))
     .catch(reject);
 });
 
-const deleteProduct = (id) => new Promise((resolve, reject) => {
-  fetch(`${clientCredentials.databaseURL}/products/${id}`, {
-    method: 'DELETE',
+const searchProducts = (searchValue) => new Promise((resolve, reject) => {
+  fetch(`${clientCredentials.databaseURL}/products/search?searchValue=${searchValue}`, {
+    method: 'GET',
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
     },
   })
-    .then((resp) => {
-      if (resp.status === 204) {
-        resolve({});
+    .then((response) => {
+      if (!response.ok) {
+        reject(new Error('Network response was not ok'));
       } else {
-        reject(resp.json());
+        resolve(response.json());
       }
     })
     .catch(reject);
 });
 
 export {
-  getAllProducts,
   getSingleProduct,
-  getProductsBySellerId,
-  getProductsByCategory,
+  getAllProducts,
   createProduct,
   updateProduct,
-  deleteProduct,
+  getProductOrdersById,
+  searchProducts,
 };

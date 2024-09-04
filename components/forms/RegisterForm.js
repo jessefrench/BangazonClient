@@ -4,14 +4,14 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { useAuth } from '../utils/context/authContext';
-import { registerUser } from '../utils/auth';
+import { useAuth } from '../../utils/context/authContext';
+import { registerUser } from '../../utils/auth';
 
 export default function RegisterForm() {
   const { user, updateUser } = useAuth();
   const router = useRouter();
 
-  const initialFormData = {
+  const initialState = {
     uid: user.fbUser.uid,
     firstName: '',
     lastName: '',
@@ -23,14 +23,22 @@ export default function RegisterForm() {
     seller: false,
   };
 
-  const [formData, setFormData] = useState(initialFormData);
+  const [formData, setFormData] = useState(initialState);
 
-  const handleInputChange = ({ target: { name, value } }) => {
-    setFormData((prev) => ({ ...prev, [name]: value }));
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
-  const handleCheckboxChange = ({ target: { checked } }) => {
-    setFormData((prev) => ({ ...prev, seller: checked }));
+  const handleCheckboxChange = (e) => {
+    const { checked } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      seller: checked,
+    }));
   };
 
   const handleSubmit = (e) => {

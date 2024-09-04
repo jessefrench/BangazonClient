@@ -18,11 +18,14 @@ export default function NavBar() {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            <Link passHref href="/shop">
-              <Nav.Link>Shop</Nav.Link>
+            <Link passHref href="/products">
+              <Nav.Link>Products</Nav.Link>
             </Link>
             <Link passHref href="/cart">
               <Nav.Link>Cart</Nav.Link>
+            </Link>
+            <Link passHref href="/profile">
+              <Nav.Link>Profile</Nav.Link>
             </Link>
           </Nav>
         </Navbar.Collapse>

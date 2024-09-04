@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from 'react-bootstrap';
 import { signIn } from '../utils/auth';
 
-function Signin() {
+export default function Signin() {
   return (
     <div
       className="text-center d-flex flex-column justify-content-center align-content-center"
@@ -25,5 +25,3 @@ function Signin() {
     </div>
   );
 }
-
-export default Signin;
