@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { getUserDetails } from '../../../api/userData';
-import UserForm from '../../../components/forms/UserForm';
+import RegisterForm from '../../../components/forms/RegisterForm';
 
 export default function EditUser() {
   const [editUser, setEditUser] = useState({});
@@ -20,5 +20,5 @@ export default function EditUser() {
     }
   }, [uid]);
 
-  return <UserForm mode="update" userProp={editUser} />;
+  return <RegisterForm mode="update" userProp={editUser} />;
 }

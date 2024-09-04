@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 import Card from 'react-bootstrap/Card';
 import Link from 'next/link';
 
-export default function UserDetailCard({ userDetails, handleSwitchToSeller }) {
+export default function UserDetailCard({ userDetails }) {
   return (
     <Card style={{ width: '22rem', margin: '20px' }}>
       <Card.Body>
@@ -16,24 +16,9 @@ export default function UserDetailCard({ userDetails, handleSwitchToSeller }) {
         <Card.Text><strong>City:</strong> {userDetails.city}</Card.Text>
         <Card.Text><strong>State:</strong> {userDetails.state}</Card.Text>
         <Card.Text><strong>ZIP:</strong> {userDetails.zip}</Card.Text>
-
-        <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
-          <Link href={`/user/edit/${userDetails.uid}`} passHref>
-            <Button variant="dark">Edit</Button>
-          </Link>
-
-          {userDetails.seller && (
-            <Link href="/product/new" passHref>
-              <Button variant="dark">Sell a Product</Button>
-            </Link>
-          )}
-
-          {!userDetails.seller && (
-            <Button type="button" onClick={handleSwitchToSeller} variant="dark">
-              Become a Seller
-            </Button>
-          )}
-        </div>
+        <Link href={`/user/edit/${userDetails.uid}`} passHref>
+          <Button variant="dark">Edit</Button>
+        </Link>
       </Card.Body>
     </Card>
   );
@@ -51,5 +36,4 @@ UserDetailCard.propTypes = {
     seller: PropTypes.bool,
     uid: PropTypes.string,
   }).isRequired,
-  handleSwitchToSeller: PropTypes.func.isRequired,
 };

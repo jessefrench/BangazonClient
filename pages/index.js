@@ -49,7 +49,7 @@ export default function Home() {
           </div>
         </>
       ) : (
-        <RegisterForm user={user} onUpdate={onUpdate} />
+        <RegisterForm user={user} onUpdate={onUpdate} mode="register" />
       )}
     </>
   );

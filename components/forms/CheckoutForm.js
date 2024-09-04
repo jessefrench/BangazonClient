@@ -4,7 +4,7 @@ import {
   Form, Button, Col, Row, Card,
 } from 'react-bootstrap';
 import { useAuth } from '../../utils/context/authContext';
-import { getAllPaymentTypes } from '../../api/paymentTypeData';
+import getAllPaymentTypes from '../../api/paymentTypeData';
 import { getUserDetails } from '../../api/userData';
 import { completeOrder, getOrderProducts } from '../../api/orderData';
 
