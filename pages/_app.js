@@ -4,7 +4,7 @@ import '../styles/globals.css';
 import { AuthProvider } from '../utils/context/authContext';
 import ViewDirectorBasedOnUserAuthStatus from '../utils/ViewDirector';
 
-function MyApp({ Component, pageProps }) {
+export default function MyApp({ Component, pageProps }) {
   return (
     <AuthProvider>
       {' '}
@@ -19,5 +19,3 @@ function MyApp({ Component, pageProps }) {
     </AuthProvider>
   );
 }
-
-export default MyApp;
